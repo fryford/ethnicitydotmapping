@@ -41,185 +41,12 @@ if(Modernizr.webgl) {
 		displayformat = d3.format("." + dvc.displaydecimals + "f");
 		legendformat = d3.format("." + dvc.legenddecimals + "f");
 
-
-		//styles
-   //   "tiles": ["..../documents/boundary/onekmsquares/tiles/onekm/{z}/{x}/{y}.pbf"]
-//   var style = {
-//  "version": 8,
-//  "sources": {
-//    "countries": {
-//      "type": "vector",
-//      // "url": "mapbox://map-id"
-//      // "url": "http://tileserver.com/layer.json", 
-//      "tiles": ["http://127.0.0.1/documents/boundary/onekmsquares/tiles/countries/{z}/{x}/{y}.pbf"],
-//      "maxzoom": 6
-//    }
-//  },
-//  "layers": [{
-//    "id": "background",
-//    "type": "background",
-//    "paint": {
-//      "background-color": "#ddeeff"
-//    }
-//  },{
-//    "id": "country-glow-outer",
-//    "type": "line",
-//    "source": "countries",
-//    "source-layer": "country",
-//    "layout": {
-//      "line-join":"round"
-//    },
-//    "paint": {
-//      "line-color": "#226688",
-//      "line-width": 5,
-//      "line-opacity": {
-//        "stops": [[0,0],[1,0.1]]
-//      }
-//    }
-//  },{
-//    "id": "country-glow-inner",
-//    "type": "line",
-//    "source": "countries",
-//    "source-layer": "country",
-//    "layout": {
-//      "line-join":"round"
-//    },
-//    "paint": {
-//      "line-color": "#226688",
-//      "line-width": {
-//        "stops": [[0,1.2],[1,1.6],[2,2],[3,2.4]]
-//      },
-//      "line-opacity":0.8,
-//    }
-//  // rainbow start
-//  },{
-//    "id": "area-white",
-//    "type": "fill",
-//    "source": "countries",
-//    "filter":["in","ADM0_A3",'ATA'],
-//    "source-layer": "country",
-//    "paint": {
-//      "fill-color": "#F0F8FF"
-//    }
-//  },{
-//    "id": "area-red",
-//    "type": "fill",
-//    "source": "countries",
-//    "filter":["in","ADM0_A3",'AFG','ALD','BEN','BLR','BWA','COK','COL','DNK','DOM','ERI','FIN','FRA','FRO','GIB','GNB','GNQ','GRC','GTM','JPN','KIR','LKA','MHL','MMR','MWI','NCL','OMN','RWA','SMR','SVK','SYR','TCD','TON','URY','WLF'],
-//    "source-layer": "country",
-//    "paint": {
-//      "fill-color": "#fdaf6b"
-//    }
-//  },{
-//    "id": "area-orange",
-//    "type": "fill",
-//    "source": "countries",
-//    "filter":["in","ADM0_A3",'AZE','BGD','CHL','CMR','CSI','DEU','DJI','GUY','HUN','IOA','JAM','LBN','LBY','LSO','MDG','MKD','MNG','MRT','NIU','NZL','PCN','PYF','SAU','SHN','STP','TTO','UGA','UZB','ZMB'],
-//    "source-layer": "country",
-//    "paint": {
-//      "fill-color": "#fdc663"
-//    }
-//  },{
-//    "id": "area-yellow",
-//    "type": "fill",
-//    "source": "countries",
-//    "filter":["in","ADM0_A3",'AGO','ASM','ATF','BDI','BFA','BGR','BLZ','BRA','CHN','CRI','ESP','HKG','HRV','IDN','IRN','ISR','KNA','LBR','LCA','MAC','MUS','NOR','PLW','POL','PRI','SDN','TUN','UMI','USA','USG','VIR','VUT'],
-//    "source-layer": "country",
-//    "paint": {
-//      "fill-color": "#fae364"
-//    }
-//  },{
-//    "id": "area-green",
-//    "type": "fill",
-//    "source": "countries",
-//    "filter":["in","ADM0_A3",'ARE','ARG','BHS','CIV','CLP','DMA','ETH','GAB','GRD','GRL','HMD','IND','IOT','IRL','IRQ','ITA','KOS','LUX','MEX','NAM','NER','PHL','PRT','RUS','SEN','SUR','TZA','VAT'],
-//    "source-layer": "country",
-//    "paint": {
-//      "fill-color": "#d3e46f"
-//    }
-//  },{
-//    "id": "area-turquoise",
-//    "type": "fill",
-//    "source": "countries",
-//    "filter":["in","ADM0_A3",'AUT','BEL','BHR','BMU','BRB','CYN','DZA','EST','FLK','GMB','GUM','HND','JEY','KGZ','LIE','MAF','MDA','NGA','NRU','SLB','SOL','SRB','SWZ','THA','TUR','VEN','VGB'],
-//    "source-layer": "country",
-//    "paint": {
-//      "fill-color": "#aadb78"
-//    }
-//  },{
-//    "id": "area-blue",
-//    "type": "fill",
-//    "source": "countries",
-//    "filter":["in","ADM0_A3",'AIA','BIH','BLM','BRN','CAF','CHE','COM','CPV','CUB','ECU','ESB','FSM','GAZ','GBR','GEO','KEN','LTU','MAR','MCO','MDV','NFK','NPL','PNG','PRY','QAT','SLE','SPM','SYC','TCA','TKM','TLS','VNM','WEB','WSB','YEM','ZWE'],
-//    "source-layer": "country",
-//    "paint": {
-//      "fill-color": "#a3cec5"
-//    }
-//  },{
-//    "id": "area-purple",
-//    "type": "fill",
-//    "source": "countries",
-//    "filter":["in","ADM0_A3",'ABW','ALB','AND','ATC','BOL','COD','CUW','CYM','CYP','EGY','FJI','GGY','IMN','KAB','KAZ','KWT','LAO','MLI','MNP','MSR','MYS','NIC','NLD','PAK','PAN','PRK','ROU','SGS','SVN','SWE','TGO','TWN','VCT','ZAF'],
-//    "source-layer": "country",
-//    "paint": {
-//      "fill-color": "#ceb5cf"
-//    }
-//  },{
-//    "id": "area-pink",
-//    "type": "fill",
-//    "source": "countries",
-//    "filter":["in","ADM0_A3",'ARM','ATG','AUS','BTN','CAN','COG','CZE','GHA','GIN','HTI','ISL','JOR','KHM','KOR','LVA','MLT','MNE','MOZ','PER','SAH','SGP','SLV','SOM','TJK','TUV','UKR','WSM'],
-//    "source-layer": "country",
-//    "paint": {
-//      "fill-color": "#f3c1d3"
-//    }
-//  // rainbow end
-//  },{
-//    "id": "geo-lines",
-//    "type": "line",
-//    "source": "countries",
-//    "source-layer": "geo-lines",
-//    "paint": {
-//      "line-color": "#226688",
-//      "line-width": {
-//        "stops": [[0,0.2],[4,1]]
-//      },
-//      "line-dasharray":[6,2]
-//    }
-//  },{
-//    "id": "land-border-country",
-//    "type": "line",
-//    "source": "countries",
-//    "source-layer": "land-border-country",
-//    "paint": {
-//      "line-color": "#fff",
-//      "line-width": {
-//        "base":1.5,
-//        "stops": [[0,0],[1,0.8],[2,1]]
-//      }
-//    }
-//  },{
-//    "id": "state",
-//    "type": "line",
-//    "source": "countries",
-//    "source-layer": "state",
-//    "minzoom": 3,
-//    "filter": ["in","ADM0_A3",'USA','CAN','AUS'],
-//    "paint": {
-//      "line-color": "#226688",
-//      "line-opacity": 0.25,
-//      "line-dasharray":[6,2,2,2],
-//      "line-width": 1.2
-//    }
-//  }]
-//};
-
 		//set up basemap
 		map = new mapboxgl.Map({
 		  container: 'map', // container id
 		 // style: style,
 		  style: "data/style.json", //stylesheet location
-		  center: [-2.5, 54], // starting position
+		  center: [0.12, 51.50], // starting position
 		  zoom: 8, // starting zoom
 		  maxZoom: 20, //
 		  attributionControl: false
@@ -252,59 +79,7 @@ if(Modernizr.webgl) {
 
 		
 		//addFullscreen();
-		
-		//set up d3 color scales
-				
-//		rateById = {};
-//		areaById = {};
-//
-//		data.forEach(function(d) { rateById[d.AREACD] = +eval("d." + dvc.varname); areaById[d.AREACD] = d.AREANM});	
-//		
-//		
-//		//Flatten data values and work out breaks
-//		var values =  data.map(function(d) { return +eval("d." + dvc.varname); }).filter(function(d) {return !isNaN(d)}).sort(d3.ascending);
-//		
-//		if(config.ons.breaks =="jenks") {
-//			breaks = [];
-//			
-//			ss.ckmeans(values, (dvc.numberBreaks)).map(function(cluster,i) {
-//				if(i<dvc.numberBreaks-1) {
-//					breaks.push(cluster[0]);
-//				} else {
-//					breaks.push(cluster[0])
-//					//if the last cluster take the last max value
-//					breaks.push(cluster[cluster.length-1]);
-//				}
-//			});
-//		}
-//		else if (config.ons.breaks == "equal") {
-//			breaks = ss.equalIntervalBreaks(values, dvc.numberBreaks);
-//		}
-//		else {breaks = config.ons.breaks;};
-//		
-//		
-//		//round breaks to specified decimal places
-//		breaks = breaks.map(function(each_element){
-//			return Number(each_element.toFixed(dvc.legenddecimals));
-//		});
-//		
-//		//work out halfway point (for no data position)
-//		midpoint = breaks[0] + ((breaks[dvc.numberBreaks] - breaks[0])/2)
-//		
-//		//Load colours
-//		if(typeof dvc.varcolour === 'string') {
-//			colour = colorbrewer[dvc.varcolour][dvc.numberBreaks];
-//		} else {
-//			colour = dvc.varcolour;
-//		}
-//		
-//		//set up d3 color scales
-//		color = d3.scaleThreshold()
-//				.domain(breaks.slice(1))
-//				.range(colour);
-		
-		//now ranges are set we can call draw the key
-		//createKey(config);
+
 		
 		
 		map.on('load', function() {
@@ -375,7 +150,6 @@ if(Modernizr.webgl) {
 				"source": {
 					"type": "vector",
 					"tiles": ["https://maps.tilehosting.com/c/9b29dd2c-248e-459d-9dc5-28f4e358657d/data/OAethnicity/{z}/{x}/{y}.pbf.pict?key=7rA0yA362pBi9PZxyYlY"],
-					//"tiles": ["http://localhost/documents/boundary/onekmsquares/tiles/countries/{z}/{x}/{y}.pbf"],
 					"minzoom": 1,
 					"maxzoom": 14
 				},
@@ -394,153 +168,7 @@ if(Modernizr.webgl) {
 		});
 		
 		
-		//convert topojson to geojson
-		//for(key in geog.objects){
-//			var areas = topojson.feature(geog, geog.objects[key])
-//		}
-//		
-//		//Work out extend of loaded geography file so we can set map to fit total extent
-//		bounds = turf.extent(areas);
-//		
-//		//set map to total extent
-//		setTimeout(function(){
-//			map.fitBounds([[bounds[0],bounds[1]], [bounds[2], bounds[3]]])
-//		},1000);
-//		
-//		//and add properties to the geojson based on the csv file we've read in
-//		areas.features.map(function(d,i) {
-//			
-//		  d.properties.fill = color(rateById[d.properties.AREACD]) 
-//		});
-//
-//		
-//		map.on('load', function() {
-//		  
-//			map.addSource('area', { 'type': 'geojson', 'data': areas });
-//		
-//			  map.addLayer({
-//				  'id': 'area',
-//				  'type': 'fill',
-//				  'source': 'area',
-//				  'layout': {},
-//				  'paint': {
-//					  'fill-color': {
-//							type: 'identity',
-//							property: 'fill',
-//					   },
-//					  'fill-opacity': 0.7,
-//					  'fill-outline-color': '#fff'
-//				  }
-//			  });
-//			
-//			//Get current year for copyright
-//			today = new Date();
-//			copyYear = today.getFullYear();
-//			map.style.sourceCaches['area']._source.attribution = "Contains OS data &copy; Crown copyright and database right " + copyYear;
-//			
-//			map.addLayer({
-//				"id": "state-fills-hover",
-//				"type": "line",
-//				"source": "area",
-//				"layout": {},
-//				"paint": {
-//					"line-color": "#000",
-//					"line-width": 2
-//				},
-//				"filter": ["==", "AREACD", ""]
-//			});
-//			
-//			map.addLayer({
-//				"id": "mapillary",
-//				"type": "line",
-//				"source": {
-//					"type": "vector",
-//					"tiles": ["...../documents/boundary/onekmsquares/tilesonekm/{z}/{x}/{y}.pbf"],
-//					"minzoom": 6,
-//					"maxzoom": 14
-//				}
-//			});
-//					
-//			  map.addLayer({
-//				  'id': 'area_labels',
-//				  'type': 'symbol',
-//				  'source': 'area',
-//				  'minzoom': 10,
-//				  'layout': {
-//					  "text-field": '{AREANM}',
-//					  "text-font": ["Open Sans","Arial Unicode MS Regular"],
-//					  "text-size": 14
-//				  },
-//				  'paint': {
-//					  "text-color": "#666",
-//					  "text-halo-color": "#fff",
-//					  "text-halo-width": 1,
-//					  "text-halo-blur": 1
-//				  }
-//			  });
-//		  
-//			 
-//			//test whether ie or not
-//			function detectIE() {
-//			  var ua = window.navigator.userAgent;
-//			
-//			  // Test values; Uncomment to check result …
-//			
-//			  // IE 10
-//			  // ua = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)';
-//			
-//			  // IE 11
-//			  // ua = 'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko';
-//			
-//			  // Edge 12 (Spartan)
-//			  // ua = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0';
-//			
-//			  // Edge 13
-//			  // ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586';
-//			
-//			  var msie = ua.indexOf('MSIE ');
-//			  if (msie > 0) {
-//				// IE 10 or older => return version number
-//				return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
-//			  }
-//			
-//			  var trident = ua.indexOf('Trident/');
-//			  if (trident > 0) {
-//				// IE 11 => return version number
-//				var rv = ua.indexOf('rv:');
-//				return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
-//			  }
-//			
-//			  var edge = ua.indexOf('Edge/');
-//			  if (edge > 0) {
-//				// Edge (IE 12+) => return version number
-//				return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
-//			  }
-//			
-//			  // other browser
-//			  return false;
-//			}
-//			
-//			
-//			if(detectIE()){
-//				onMove = onMove.debounce(100);
-//				onLeave = onLeave.debounce(100);
-//				console.log("ie");
-//			};
-//			
-			//Highlight stroke on mouseover (and show area information)
-			map.on("mousemove", "OAbounds", onMove);
-//	
-//			// Reset the state-fills-hover layer's filter when the mouse leaves the layer.
-//			map.on("mouseleave", "area", onLeave);
-//			
-//			//Add click event
-//			map.on("click", "area", onClick);
-//			
-//			//get location on click
-//			d3.select(".mapboxgl-ctrl-geolocate").on("click",geolocate);
-//	
-//		});
+	
 		
 		function onMove(e) {
 				newAREACD = e.features[0].properties.oa11cd;
@@ -585,14 +213,6 @@ if(Modernizr.webgl) {
 					percentages.forEach(function(d,i) {
 						d3.select("#legendRect" + i).transition().duration(300).style("width", (percentages[i]/3.3333333) + "px");
 					});
-					
-	
-					
-
-
-					console.log(asian);
-//					selectArea(e.features[0].properties.oa11cd);
-//					setAxisVal(e.features[0].properties.oa11cd);
 				}
 		};
 		
@@ -689,7 +309,6 @@ if(Modernizr.webgl) {
 				.data(keydata.groups)
 				.enter()
 				.append('li')
-				//.style("background-color", function(d , i) { return dvc.essential.colour_palette[i]; })
 				.attr('class', function(d, i) { return 'key-item key-' + i + ' b '+ d.replace(' ', '-').toLowerCase(); })
 				.on("mouseover",function(d, i){
 					d3.selectAll(".key-item").style("opacity",0.2);
@@ -708,11 +327,7 @@ if(Modernizr.webgl) {
 			
 			legend.append('b').attr("class", "legendBlocks")
 				.style("background-color", function(d , i) { return keydata.colours[i]; });
-			
-			
-			
-
-			
+		
 		}
 		
 		function createKey(config){
