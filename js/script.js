@@ -92,9 +92,7 @@ if(Modernizr.webgl) {
 				"type": "fill",
 				"source": {
 					"type": "vector",
-					
 					"tiles": ["https://maps.tilehosting.com/c/9b29dd2c-248e-459d-9dc5-28f4e358657d/data/OAethnicity/{z}/{x}/{y}.pbf.pict?key=7rA0yA362pBi9PZxyYlY"],
-					//"tiles": ["http://localhost/documents/boundary/onekmsquares/tiles/countries/{z}/{x}/{y}.pbf"],
 					"minzoom": 1,
 					"maxzoom": 14
 				},
@@ -109,10 +107,6 @@ if(Modernizr.webgl) {
 					"fill-color": "#fff"
 				}
 			}, 'place_suburb');
-			
-//"tiles": ["http://localhost/documents/boundary/onekmsquares/tiles/countries/{z}/{x}/{y}.pbf"],
-//http://localhost/documents/fryford.github.io/mapdev/dotmapping/tiles/{z}/{x}/{y}.pbf
-//https://maps.tilehosting.com/c/9b29dd2c-248e-459d-9dc5-28f4e358657d/data/ethnicitydots.json?key=7rA0yA362pBi9PZxyYlY
 			
 			// Add Mapillary sequence layer.
 			// https://www.mapillary.com/developer/tiles-documentation/#sequence-layer
@@ -168,7 +162,10 @@ if(Modernizr.webgl) {
 		});
 		
 		
-	
+
+			//Highlight stroke on mouseover (and show area information)
+			map.on("mousemove", "OAbounds", onMove);
+
 		
 		function onMove(e) {
 				newAREACD = e.features[0].properties.oa11cd;
@@ -213,6 +210,14 @@ if(Modernizr.webgl) {
 					percentages.forEach(function(d,i) {
 						d3.select("#legendRect" + i).transition().duration(300).style("width", (percentages[i]/3.3333333) + "px");
 					});
+					
+	
+					
+
+
+					console.log(asian);
+//					selectArea(e.features[0].properties.oa11cd);
+//					setAxisVal(e.features[0].properties.oa11cd);
 				}
 		};
 		
@@ -309,6 +314,7 @@ if(Modernizr.webgl) {
 				.data(keydata.groups)
 				.enter()
 				.append('li')
+				//.style("background-color", function(d , i) { return dvc.essential.colour_palette[i]; })
 				.attr('class', function(d, i) { return 'key-item key-' + i + ' b '+ d.replace(' ', '-').toLowerCase(); })
 				.on("mouseover",function(d, i){
 					d3.selectAll(".key-item").style("opacity",0.2);
@@ -327,7 +333,11 @@ if(Modernizr.webgl) {
 			
 			legend.append('b').attr("class", "legendBlocks")
 				.style("background-color", function(d , i) { return keydata.colours[i]; });
-		
+			
+			
+			
+
+			
 		}
 		
 		function createKey(config){
