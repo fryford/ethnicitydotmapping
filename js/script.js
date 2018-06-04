@@ -20,15 +20,7 @@ if(Modernizr.webgl) {
 		dvc = config.ons;
 		oldAREACD = "";
 		
-		
-		//get column name	
-//		for (var column in data[0]) {
-//			if (column == 'AREACD') continue;
-//			if (column == 'AREANM') continue;
-//			dvc.varname = column;
-//		
-//		}	
-		
+	
 		//set title of page
 		//Need to test that this shows up in GA
 		document.title = dvc.maptitle;
