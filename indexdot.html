@@ -11,31 +11,31 @@
   <link rel="stylesheet" href="css/chosen.css">
 
 <style>
-    body { 
-		margin:0; 
-		padding:0; 
+    body {
+		margin:0;
+		padding:0;
 		font-family: 'Open Sans', sans-serif;
 		width:100%;
 /*		max-width:800px;
 */		margin: 0px auto;
 		display:table;
 	}
-	
+
 	#header{
-		height:70px; 
+		height:70px;
 		width:100%
 	}
-	
+
 	.mapboxgl-ctrl-group .mapboxgl-ctrl-compass {
 		display: none;
 	}
-	
+
 	@media (min-width: 599px) {
-		#map { 
-			height: 700px; 
-			width: 100%; 
+		#map {
+			height: 700px;
+			width: 100%;
 		}
-		
+
 		#selectNav {
 			position:absolute;
 			top:0px;
@@ -45,7 +45,7 @@
 			background-color:rgba(255,255,255,0.8);
 			z-index:1;
 		}
-		
+
 		#keydiv {
 			position:absolute;
 			top:40px;
@@ -55,28 +55,28 @@
 			background-color:rgba(255,255,255,0.8);
 			z-index:1;
 		}
-		
+
 		#currVal {
 			font-size:14px;
-			
+
 		}
 	}
-	
+
 	@media (max-width: 600px) {
-		
-		 body { 
+
+		 body {
 			height: 620px;
 		}
-		
-	    #map { 
+
+	    #map {
 			position:absolute;
 			top:0px;
 			margin-top:120px;
-			height: 500px; 
+			height: 500px;
 			width: 100%;
-			overflow:visible; 
+			overflow:visible;
 		}
-		
+
 		#selectNav {
 			position:absolute;
 			top:-120px;
@@ -86,7 +86,7 @@
 			background-color:rgba(255,255,255,0.8);
 			z-index:3;
 		}
-		
+
 		#keydiv {
 			position:absolute;
 			top:-80px;
@@ -96,14 +96,14 @@
 			background-color:rgba(255,255,255,0.8);
 			z-index:1;
 		}
-		
+
 		#currVal {
 			font-size:14px;
-			
+
 		}
-		
+
 		.mapboxgl-ctrl-fullscreen {
-			display:none !important;	
+			display:none !important;
 		}
 	}
 
@@ -173,14 +173,36 @@
 	float:right;
 	font-weight: normal;
 }
-	
+
 .key .legendRect {
 
 	float: left;
     /*width: 10px;*/
     height: 13px;
-    background-color: #666;	
+    background-color: #666;
 }
+
+#pcText {
+			width: 130px;
+			height:20px;
+			padding: 3px;
+			color: #999999;
+}
+
+.btnEnable {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 40px;
+    border: none;
+    padding: 6px 0;
+    background-color: #0084d1;
+    font: 700 16px Arial;
+    color: #FFF;
+    filter: inherit;
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+
 </style>
 
 </head>
@@ -188,9 +210,14 @@
 
 <div id='map'>
 	<div id='keydiv'></div>
-    <div id='selectNav'></div>
-    
-    
+    <div id='selectNav'>
+      <form id="pcForm">
+                  	<input id="pcText" class="picaarticle" type="text" tabindex="1" placeholder="e.g. NP10 8XG">
+                 		<button class="btnEnable" id="submitPost" type="submit">GO!</button>
+      </form>
+    </div>
+
+
 </div>
 
 <!--<script src="http://d3js.org/d3.v3.min.js"></script>
