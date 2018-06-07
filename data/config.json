@@ -3,7 +3,7 @@
 "varcolour": "PuBu",
 "varunit": "change in months",
 "groups":["white","black","asian","mixed","other"],
-"colours":["#ff7f00","#377eb8","#4daf4a","#984ea3","#e41a1c"],
+"colours":["#377eb8","#ff7f00","#4daf4a","#984ea3","#e41a1c"],
 "displaydecimals": 1,
 "legenddecimals": 0,
 "breaks": "equal",

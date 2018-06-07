@@ -77,7 +77,7 @@ if(Modernizr.webgl) {
 		map.on('load', function() {
 
 
-			zoomThreshold = 10;
+			zoomThreshold = 11;
 
 			map.addLayer({
 				"id": "OAbounds",
@@ -114,14 +114,14 @@ if(Modernizr.webgl) {
 				"source-layer": "OA_All",
 				'paint': {
 					'circle-radius': {
-						'base': 1.75,
+						'base': 2,
 						'stops': [[12, 2], [18, 30], [22, 180]]
 					},
 					'circle-color': [
 						'match',
 						['get', 'ethnicity'],
-						'white', '#ff7f00',
-						'black', '#377eb8',
+						'white', '#377eb8',
+						'black', '#ff7f00',
 						'asian', '#4daf4a',
 						'mixed', '#984ea3',
 						/* other */ '#e41a1c'
@@ -145,7 +145,7 @@ if(Modernizr.webgl) {
 					"visibility": "visible"
 				},
 				"paint": {
-					"line-color": "#000",
+					"line-color": "#fff",
 					"line-width": 2
 				},
 				"filter": ["==", "oa11cd", ""]
@@ -316,7 +316,7 @@ if(Modernizr.webgl) {
 
 		function enableMouseEvents() {
 				map.on("mousemove", "area", onMove);
-				map.on("click", "area", onClick);
+				//map.on("click", "area", onClick);
 				map.on("mouseleave", "area", onLeave);
 		}
 
