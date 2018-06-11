@@ -107,15 +107,15 @@ if(Modernizr.webgl) {
 				'type': 'circle',
 				"source": {
 					"type": "vector",
-					"tiles": ["https://maps.tilehosting.com/c/9b29dd2c-248e-459d-9dc5-28f4e358657d/data/ethnicitydots/{z}/{x}/{y}.pbf.pict?key=7rA0yA362pBi9PZxyYlY"],
+					"tiles": ["https://maps.tilehosting.com/c/9b29dd2c-248e-459d-9dc5-28f4e358657d/data/ethnicitydots4/{z}/{x}/{y}.pbf.pict?key=7rA0yA362pBi9PZxyYlY"],
 					"minzoom": 1,
 					"maxzoom": 14
 				},
 				"source-layer": "OA_All",
 				'paint': {
 					'circle-radius': {
-						'base': 2,
-						'stops': [[12, 2], [18, 30], [22, 180]]
+						'base': 4,
+						'stops': [[11, 1], [12, 1.5], [13, 2], [14, 2.5], [16, 10], [22, 180]]
 					},
 					'circle-color': [
 						'match',
