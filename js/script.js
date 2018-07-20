@@ -68,7 +68,7 @@ if(Modernizr.webgl) {
 			compact: true
 		}));
 
-
+		map.getCanvasContainer().style.cursor = 'pointer';
 
 		//addFullscreen();
 
@@ -117,6 +117,7 @@ if(Modernizr.webgl) {
 						'base': 4,
 						'stops': [[11, 1], [12, 1.5], [13, 2], [14, 2.5], [16, 10], [22, 180]]
 					},
+					'circle-opacity': 0.8,
 					'circle-color': [
 						'match',
 						['get', 'ethnicity'],
@@ -165,6 +166,25 @@ if(Modernizr.webgl) {
 			//Highlight stroke on mouseover (and show area information)
 			map.on("mousemove", "OAbounds", onMove);
 
+
+			//Work out zoom level and update
+			map.on("moveend", function (e) {
+				zoom = parseInt(map.getZoom());
+
+				baselevel = 13;
+				numberperdotlowest = 10;
+				dropdensity = 2;
+
+				if(zoom < baselevel) {
+					thepowerof = (baselevel - zoom);
+					numberperdot = numberperdotlowest * Math.pow(dropdensity,thepowerof);
+
+					d3.select("#people").text("1 dot = ~" +  (numberperdot).toLocaleString('en-GB') + " people")
+				} else {
+					d3.select("#people").text("1 dot = ~10 people")
+				}
+			});
+
 			function getCodes(myPC)	{
 
 				console.log(myPC);
@@ -203,10 +223,8 @@ if(Modernizr.webgl) {
 		function success(lat,lng) {
 
 		  //go on to filter
-		  //Translate lng lat coords to point on screen
-		  point = map.project([lng,lat]);
 
-			map.flyTo({center:[lng,lat], zoom:15, speed:0.7})
+			map.flyTo({center:[lng,lat], zoom:13, speed:0.7})
 
 			map.on('flystart', function(){
 				flying=true;
@@ -218,6 +236,9 @@ if(Modernizr.webgl) {
 
 			map.on('moveend',function(e){
 
+						setTimeout(function() {
+						//Translate lng lat coords to point on screen
+						point = map.project([lng,lat]);
 						//then check what features are underneath
 						var features = map.queryRenderedFeatures(point);
 
@@ -227,7 +248,7 @@ if(Modernizr.webgl) {
 						//disableMouseEvents();
 
 						map.setFilter("OAboundshover", ["==", "oa11cd", features[0].properties.oa11cd]);
-
+					},500)
 
 			});
 
@@ -373,6 +394,8 @@ if(Modernizr.webgl) {
 
 			//d3.select("#keydiv")
 			console.log(keydata);
+
+			d3.select('#keydiv').append("p").attr("id","people").text("placeholder");
 
 			legend = d3.select('#keydiv')
 				.append('ul')
