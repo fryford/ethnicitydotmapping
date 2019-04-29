@@ -84,7 +84,8 @@ if(Modernizr.webgl) {
 				"type": "fill",
 				"source": {
 					"type": "vector",
-					"tiles": ["https://maps.tilehosting.com/c/9b29dd2c-248e-459d-9dc5-28f4e358657d/data/OAethnicity/{z}/{x}/{y}.pbf.pict?key=7rA0yA362pBi9PZxyYlY"],
+					//"tiles": ["https://maps.tilehosting.com/c/9b29dd2c-248e-459d-9dc5-28f4e358657d/data/OAethnicity/{z}/{x}/{y}.pbf.pict?key=7rA0yA362pBi9PZxyYlY"],
+					"tiles": ["https://cdn.ons.gov.uk/maptiles/t9/{z}/{x}/{y}.pbf"],
 					"minzoom": 1,
 					"maxzoom": 14
 				},
@@ -107,11 +108,11 @@ if(Modernizr.webgl) {
 				'type': 'circle',
 				"source": {
 					"type": "vector",
-					"tiles": ["https://maps.tilehosting.com/c/9b29dd2c-248e-459d-9dc5-28f4e358657d/data/ethnicitydots4/{z}/{x}/{y}.pbf.pict?key=7rA0yA362pBi9PZxyYlY"],
+					"tiles": ["https://cdn.ons.gov.uk/maptiles/t8/{z}/{x}/{y}.pbf"],
 					"minzoom": 1,
 					"maxzoom": 14
 				},
-				"source-layer": "OA_All",
+				"source-layer": "OA_all",
 				'paint': {
 					'circle-radius': {
 						'base': 4,
@@ -136,7 +137,8 @@ if(Modernizr.webgl) {
 				"type": "line",
 				"source": {
 					"type": "vector",
-					"tiles": ["https://maps.tilehosting.com/c/9b29dd2c-248e-459d-9dc5-28f4e358657d/data/OAethnicity/{z}/{x}/{y}.pbf.pict?key=7rA0yA362pBi9PZxyYlY"],
+					"tiles": ["https://cdn.ons.gov.uk/maptiles/t9/{z}/{x}/{y}.pbf"],
+					//"tiles": ["https://maps.tilehosting.com/c/9b29dd2c-248e-459d-9dc5-28f4e358657d/data/OAethnicity/{z}/{x}/{y}.pbf.pict?key=7rA0yA362pBi9PZxyYlY"],
 					"minzoom": 1,
 					"maxzoom": 14
 				},
