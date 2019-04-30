@@ -7,8 +7,15 @@
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
   <link href='css/mapbox-gl.css' rel='stylesheet'/>
+
+
+  <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet'/>
+  <link href='https://cdn.ons.gov.uk/sixteens/a62dd01/css/main.css' rel='stylesheet'/>
+  <link href='css/global.css' rel='stylesheet'/>
+  <link href='https://onsvisual.github.io/pattern-library/dist/fontawesome/css/all.css' rel='stylesheet'/>
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
   <link rel="stylesheet" href="css/chosen.css">
+
 
 <style>
     body {
@@ -26,10 +33,6 @@
 		width:100%
 	}
 
-  #people {
-    font-size:12px;
-  }
-
 	.mapboxgl-ctrl-group .mapboxgl-ctrl-compass {
 		display: none;
 	}
@@ -41,23 +44,20 @@
 		}
 
 		#selectNav {
-			position:absolute;
-			top:0px;
-			left:0px;
-			width:200px;
+			width:220px;
 			height:40px;
-			background-color:rgba(255,255,255,0.8);
+			background-color:rgba(255,255,255,0.9);
 			z-index:1;
 		}
 
 		#keydiv {
 			position:absolute;
-			top:40px;
+			top:0px;
 			left:0px;
-			width:200px;
-			height:140px;
-			background-color:rgba(255,255,255,0.8);
+			width:220px;
+			background-color:rgba(0,0,0,0.9);
 			z-index:1;
+      border-bottom-right-radius: 30px;
 		}
 
 		#currVal {
@@ -87,7 +87,7 @@
 			left:0px;
 			width:100%;
 			height:40px;
-			background-color:rgba(255,255,255,0.8);
+			background-color:rgba(255,255,255,0.9);
 			z-index:3;
 		}
 
@@ -97,7 +97,7 @@
 			left:0px;
 			width:100%;
 			height:80px;
-			background-color:rgba(255,255,255,0.8);
+			background-color:rgba(255,255,255,0.9);
 			z-index:1;
 		}
 
@@ -115,17 +115,17 @@
 .key /* required */
 {
 	display: inline-block;
-	margin: 0 0 1em 0;
+	margin: 0 0 0 0;
 	padding: 0;
 	line-height: 15px;
 }
 .key .legendlabel {
 	white-space: nowrap;
 	margin-right: 13px;
-	font-size: 12px;
-	color: #333;
+	font-size: 14px;
 	font-weight: normal;
 	font-family: Arial, Helvetica, sans-serif;
+  color: #fff;
 }
 
 .key .percentlabel {
@@ -133,10 +133,10 @@
 	margin-right: 13px;
 	font-size: 12px;
 	float: right;
-	color: #333;
 	font-weight: normal;
 	font-family: Arial, Helvetica, sans-serif;
 	text-align:right;
+  color: #fff;
 }
 
 .key li/* required */
@@ -158,14 +158,14 @@
 }
 .legendBlocks{ /* new for Cluster chart */
 	width: 15px !important;
-	margin-top:0px !important;
+	margin-top:4px !important;
 }
 .key legendlabel/* required */
 {
 	white-space: nowrap;
 	font-size: 12px;
-	color: #333;
 	font-weight: normal;
+  color: #fff;
 }
 
 .key .percentlabel/* required */
@@ -173,9 +173,9 @@
 	white-space: nowrap;
 	font-size: 12px;
 	width: 40px;
-	color: #333;
 	float:right;
 	font-weight: normal;
+  color: #fff;
 }
 
 .key .legendRect {
@@ -183,7 +183,8 @@
 	float: left;
     /*width: 10px;*/
     height: 13px;
-    background-color: #666;
+    margin-top: 4px;
+    background-color: #fff;
 }
 
 #pcText {
@@ -207,19 +208,83 @@
     cursor: pointer;
 }
 
+
+.input-group {
+    width: 220px;
+    margin-bottom: 20px;
+}
+
+ul {
+    display: block;
+    list-style-type: none !important;
+}
+
+.details {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* abbr {
+    position: absolute;
+    top: 9px;
+    right: 15px;
+    display: block;
+    width: 15px;
+    height: 24px;
+    background: url(./images/closeblue.svg)no-repeat;
+    background-size: 15px 24px;
+    font-size: 1px;
+    background-color: #fff;
+} */
+
+#people {
+  color: #fff;
+}
+
+.clearable{
+  background: #fff url(./images/closeblue.svg) no-repeat right -15px center;
+  background-size: 15px 24px;
+  transition: background 0.4s;
+}
+.clearable.x  { background-position: right 10px center; } /* (jQ) Show icon */
+.clearable.onX{ cursor: pointer; }              /* (jQ) hover cursor style */
+.clearable::-ms-clear {display: none; width:0; height:0;} /* Remove IE default X */
+
+.details__summary {
+    color:#fff;
+
+}
+
 </style>
 
 </head>
 <body>
 
 <div id='map'>
-	<div id='keydiv'></div>
+	<div id='keydiv'>
     <div id='selectNav'>
-      <form id="pcForm">
-                  	<input id="pcText" class="picaarticle" type="text" tabindex="1" placeholder="e.g. NP10 8XG">
-                 		<button class="btnEnable" id="submitPost" type="submit">GO!</button>
-      </form>
+      <div class="input-group">
+          <input type="text" class="search-control clearable" placeholder="Enter a postcode">
+          <div class="input-group-addon search-group">
+              <button id="submitPost" type="submit" style="background: none;border:0;">
+                <span class="visuallyhidden">Postcode search</span>
+                <span class="glyphicon glyphicon-search"></span>
+              </button>
+          </div>
+      </div>
     </div>
+    <div id="keyinfo">
+
+      <details class="details" role="group" open>
+          <summary class="details__summary" role="button" aria-controls="details-content-3" aria-expanded="true">Legend</summary>
+          <div class="details__body" id="details-content-3" aria-hidden="false">
+              <label class="embed-code__label" id="people">Title here</label>
+          </div>
+      </details>
+    </div>
+    </div>
+
+
 
 
 </div>

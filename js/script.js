@@ -3,6 +3,16 @@
 
 if(Modernizr.webgl) {
 
+	function tog(v){return v?'addClass':'removeClass';}
+	$(document).on('input', '.clearable', function(){
+	    $(this)[tog(this.value)]('x');
+	}).on('mousemove', '.x', function( e ){
+	    $(this)[tog(this.offsetWidth-18 < e.clientX-this.getBoundingClientRect().left)]('onX');
+	}).on('touchstart click', '.onX', function( ev ){
+	    ev.preventDefault();
+	    $(this).removeClass('x onX').val('').change();
+	});
+
 	//setup pymjs
 	var pymChild = new pym.Child();
 
@@ -122,11 +132,11 @@ if(Modernizr.webgl) {
 					'circle-color': [
 						'match',
 						['get', 'ethnicity'],
-						'white', '#377eb8',
-						'black', '#ff7f00',
-						'asian', '#4daf4a',
-						'mixed', '#984ea3',
-						/* other */ '#e41a1c'
+						'white', '#2bafdb',
+						'black', '#ea38b3',
+						'asian', '#2be1b3',
+						'mixed', '#e8f12f',
+						/* other */ '#f75d2b'
 					]
 				}
 			}, 'place_suburb');
@@ -159,7 +169,7 @@ if(Modernizr.webgl) {
 		$("#submitPost").click(function( event ) {
 						event.preventDefault();
 						event.stopPropagation();
-						myValue=$("#pcText").val();
+						myValue=$(".search-control").val();
 
 						getCodes(myValue);
 		});
@@ -167,6 +177,7 @@ if(Modernizr.webgl) {
 
 			//Highlight stroke on mouseover (and show area information)
 			map.on("mousemove", "OAbounds", onMove);
+			map.on("click", "OAbounds", onClick);
 
 
 			//Work out zoom level and update
@@ -188,6 +199,9 @@ if(Modernizr.webgl) {
 			});
 
 			function getCodes(myPC)	{
+
+				//first show the remove cross
+				d3.select(".search-control").append("abbr").attr("class","postcode");
 
 				console.log(myPC);
 
@@ -222,40 +236,76 @@ if(Modernizr.webgl) {
 
 				}
 
+		// function success(lat,lng) {
+		//
+		//   //go on to filter
+		//
+		// 	map.flyTo({center:[lng,lat], zoom:13, speed:0.7})
+		//
+		// 	map.on('flystart', function(){
+		// 		flying=true;
+		// 	});
+		//
+		// 	map.on('flyend', function(){
+		// 		flying=false;
+		// 	});
+		//
+		// 	map.on('moveend',function(e){
+		//
+		// 				setTimeout(function() {
+		// 				//Translate lng lat coords to point on screen
+		// 				point = map.project([lng,lat]);
+		// 				//then check what features are underneath
+		// 				var features = map.queryRenderedFeatures(point);
+		//
+		// 				console.log(features)
+		//
+		// 				//then select area
+		// 				//disableMouseEvents();
+		//
+		// 				map.setFilter("OAboundshover", ["==", "oa11cd", features[0].properties.oa11cd]);
+		// 			},500)
+		//
+		// 	});
+		//
+		//
+		// };
+
+
 		function success(lat,lng) {
 
-		  //go on to filter
-
-			map.flyTo({center:[lng,lat], zoom:13, speed:0.7})
-
-			map.on('flystart', function(){
-				flying=true;
-			});
-
-			map.on('flyend', function(){
-				flying=false;
-			});
-
-			map.on('moveend',function(e){
-
-						setTimeout(function() {
-						//Translate lng lat coords to point on screen
-						point = map.project([lng,lat]);
-						//then check what features are underneath
-						var features = map.queryRenderedFeatures(point);
-
-						console.log(features)
-
-						//then select area
-						//disableMouseEvents();
-
-						map.setFilter("OAboundshover", ["==", "oa11cd", features[0].properties.oa11cd]);
-					},500)
-
-			});
 
 
-		};
+	//console.log(point);
+
+	map.flyTo({center:[lng,lat], zoom:13, speed:0.7})
+
+
+	map.on('moveend', filterArea);
+
+	function filterArea(e){
+	point = map.project([lng,lat]);
+	setTimeout(function(){
+
+	var tilechecker = setInterval(function(){
+		 features=null
+		var features = map.queryRenderedFeatures(point,{layers: ['OAbounds']});
+		console.log("I'm trying",features)
+		if(features.length != 0){
+			console.log(features)
+			 //onrender(),
+			map.setFilter("OAboundshover", ["==", "oa11cd", features[0].properties.oa11cd]);
+			//var features = map.queryRenderedFeatures(point);
+			disableMouseEvents();
+			clearInterval(tilechecker);
+			map.off('moveend',filterArea)
+		}
+	 },500)
+	},500);
+};
+
+
+};
 
 
 		function onMove(e) {
@@ -321,26 +371,24 @@ if(Modernizr.webgl) {
 
 		function onClick(e) {
 				disableMouseEvents();
-				newAREACD = e.features[0].properties.AREACD;
+				newAREACD = e.features[0].properties.oa11cd;
 
 				if(newAREACD != oldAREACD) {
-					oldAREACD = e.features[0].properties.AREACD;
-					map.setFilter("state-fills-hover", ["==", "AREACD", e.features[0].properties.AREACD]);
+					oldAREACD = e.features[0].properties.oa11cd;
+					map.setFilter("OAboundshover", ["==", "oa11cd", e.features[0].properties.oa11cd]);
 
-					selectArea(e.features[0].properties.AREACD);
-					setAxisVal(e.features[0].properties.AREACD);
 				}
 		};
 
 		function disableMouseEvents() {
-				map.off("mousemove", "area", onMove);
-				map.off("mouseleave", "area", onLeave);
+				map.off("mousemove", "OAbounds", onMove);
+				map.off("mouseleave", "OAbounds", onLeave);
 		}
 
 		function enableMouseEvents() {
-				map.on("mousemove", "area", onMove);
-				//map.on("click", "area", onClick);
-				map.on("mouseleave", "area", onLeave);
+				map.on("mousemove", "OAbounds", onMove);
+				map.on("click", "OAbounds", onClick);
+				map.on("mouseleave", "OAbounds", onLeave);
 		}
 
 		function selectArea(code) {
@@ -397,10 +445,10 @@ if(Modernizr.webgl) {
 			//d3.select("#keydiv")
 			console.log(keydata);
 
-			d3.select('#keydiv').append("p").attr("id","people").text("placeholder");
 
-			legend = d3.select('#keydiv')
-				.append('ul')
+			d3.select("#people").text("1 dot = ~320 people");
+
+			legend = d3.select("#details-content-3").append('ul')
 				.attr('class', 'key')
 				.selectAll('g')
 				.data(keydata.groups)
