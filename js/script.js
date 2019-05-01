@@ -3,16 +3,6 @@
 
 if(Modernizr.webgl) {
 
-	function tog(v){return v?'addClass':'removeClass';}
-	$(document).on('input', '.clearable', function(){
-	    $(this)[tog(this.value)]('x');
-	}).on('mousemove', '.x', function( e ){
-	    $(this)[tog(this.offsetWidth-18 < e.clientX-this.getBoundingClientRect().left)]('onX');
-	}).on('touchstart click', '.onX', function( ev ){
-	    ev.preventDefault();
-	    $(this).removeClass('x onX').val('').change();
-	});
-
 	//setup pymjs
 	var pymChild = new pym.Child();
 
@@ -292,9 +282,11 @@ if(Modernizr.webgl) {
 		var features = map.queryRenderedFeatures(point,{layers: ['OAbounds']});
 		console.log("I'm trying",features)
 		if(features.length != 0){
-			console.log(features)
+			//console.log(features)
 			 //onrender(),
 			map.setFilter("OAboundshover", ["==", "oa11cd", features[0].properties.oa11cd]);
+
+			updatePercent2(features[0]);
 			//var features = map.queryRenderedFeatures(point);
 			disableMouseEvents();
 			clearInterval(tilechecker);
@@ -315,58 +307,16 @@ if(Modernizr.webgl) {
 					oldAREACD = e.features[0].properties.oa11cd;
 					map.setFilter("OAboundshover", ["==", "oa11cd", e.features[0].properties.oa11cd]);
 
-				//	console.log(e.features[0].properties);
+					updatePercent(e);
 
-					totalpop = +e.features[0].properties["ethnicityOA_Asian / Asian British: Bangladeshi"] +
-							+e.features[0].properties["ethnicityOA_Asian / Asian British: Chinese"] +
-							+e.features[0].properties["ethnicityOA_Asian / Asian British: Indian"] +
-							+e.features[0].properties["ethnicityOA_Asian / Asian British: Other Asian"] +
-							+e.features[0].properties["ethnicityOA_Asian / Asian British: Pakistani"] +
-							+e.features[0].properties["ethnicityOA_White"] +
-							+e.features[0].properties["ethnicityOA_Black / African / Caribbean / Black British"] +
-							+e.features[0].properties["ethnicityOA_Mixed / Multiple ethnic group"] +
-							+e.features[0].properties["ethnicityOA_Other Ethnic Group"];
-
-					asian = displayformat(((+e.features[0].properties["ethnicityOA_Asian / Asian British: Bangladeshi"] +
-							+e.features[0].properties["ethnicityOA_Asian / Asian British: Chinese"] +
-							+e.features[0].properties["ethnicityOA_Asian / Asian British: Indian"] +
-							+e.features[0].properties["ethnicityOA_Asian / Asian British: Other Asian"] +
-							+e.features[0].properties["ethnicityOA_Asian / Asian British: Pakistani"])/totalpop)*100);
-
-					white = displayformat((+e.features[0].properties["ethnicityOA_White"]/totalpop)*100);
-
-					black = displayformat((+e.features[0].properties["ethnicityOA_Black / African / Caribbean / Black British"]/totalpop)*100);
-					mixed = displayformat((+e.features[0].properties["ethnicityOA_Mixed / Multiple ethnic group"]/totalpop)*100);
-					other = displayformat((+e.features[0].properties["ethnicityOA_Other Ethnic Group"]/totalpop)*100);
-
-
-					percentages = [white,black,asian,mixed,other];
-
-					d3.selectAll(".percentlabel").remove();
-
-					legend.insert("label",".legendBlocks").attr('class','percentlabel').text(function(d,i) {
-						return percentages[i] + "%";
-					});
-
-					percentages.forEach(function(d,i) {
-						d3.select("#legendRect" + i).transition().duration(300).style("width", (percentages[i]/3.3333333) + "px");
-					});
-
-
-
-
-
-//					selectArea(e.features[0].properties.oa11cd);
-//					setAxisVal(e.features[0].properties.oa11cd);
 				}
 		};
 
 
 		function onLeave() {
-				map.setFilter("state-fills-hover", ["==", "AREACD", ""]);
+				map.setFilter("OAboundshover", ["==", "AREACD", ""]);
 				oldAREACD = "";
-				$("#areaselect").val("").trigger("chosen:updated");
-				hideaxisVal();
+
 		};
 
 		function onClick(e) {
@@ -376,9 +326,97 @@ if(Modernizr.webgl) {
 				if(newAREACD != oldAREACD) {
 					oldAREACD = e.features[0].properties.oa11cd;
 					map.setFilter("OAboundshover", ["==", "oa11cd", e.features[0].properties.oa11cd]);
-
+					updatePercent(e);
 				}
 		};
+
+		function updatePercent(e) {
+
+			console.log(e)
+
+			totalpop = +e.features[0].properties["ethnicityOA_Asian / Asian British: Bangladeshi"] +
+					+e.features[0].properties["ethnicityOA_Asian / Asian British: Chinese"] +
+					+e.features[0].properties["ethnicityOA_Asian / Asian British: Indian"] +
+					+e.features[0].properties["ethnicityOA_Asian / Asian British: Other Asian"] +
+					+e.features[0].properties["ethnicityOA_Asian / Asian British: Pakistani"] +
+					+e.features[0].properties["ethnicityOA_White"] +
+					+e.features[0].properties["ethnicityOA_Black / African / Caribbean / Black British"] +
+					+e.features[0].properties["ethnicityOA_Mixed / Multiple ethnic group"] +
+					+e.features[0].properties["ethnicityOA_Other Ethnic Group"];
+
+			asian = displayformat(((+e.features[0].properties["ethnicityOA_Asian / Asian British: Bangladeshi"] +
+					+e.features[0].properties["ethnicityOA_Asian / Asian British: Chinese"] +
+					+e.features[0].properties["ethnicityOA_Asian / Asian British: Indian"] +
+					+e.features[0].properties["ethnicityOA_Asian / Asian British: Other Asian"] +
+					+e.features[0].properties["ethnicityOA_Asian / Asian British: Pakistani"])/totalpop)*100);
+
+			white = displayformat((+e.features[0].properties["ethnicityOA_White"]/totalpop)*100);
+
+			black = displayformat((+e.features[0].properties["ethnicityOA_Black / African / Caribbean / Black British"]/totalpop)*100);
+			mixed = displayformat((+e.features[0].properties["ethnicityOA_Mixed / Multiple ethnic group"]/totalpop)*100);
+			other = displayformat((+e.features[0].properties["ethnicityOA_Other Ethnic Group"]/totalpop)*100);
+
+
+			percentages = [white,black,asian,mixed,other];
+
+			d3.selectAll(".percentlabel").remove();
+
+			legend.insert("label",".legendBlocks").attr('class','percentlabel').text(function(d,i) {
+				return percentages[i] + "%";
+			});
+
+			percentages.forEach(function(d,i) {
+				d3.select("#legendRect" + i).transition().duration(300).style("width", (percentages[i]/3.3333333) + "px");
+			});
+
+
+
+
+		}
+
+		function updatePercent2(e) {
+
+			console.log(e)
+
+			totalpop = +e.properties["ethnicityOA_Asian / Asian British: Bangladeshi"] +
+					+e.properties["ethnicityOA_Asian / Asian British: Chinese"] +
+					+e.properties["ethnicityOA_Asian / Asian British: Indian"] +
+					+e.properties["ethnicityOA_Asian / Asian British: Other Asian"] +
+					+e.properties["ethnicityOA_Asian / Asian British: Pakistani"] +
+					+e.properties["ethnicityOA_White"] +
+					+e.properties["ethnicityOA_Black / African / Caribbean / Black British"] +
+					+e.properties["ethnicityOA_Mixed / Multiple ethnic group"] +
+					+e.properties["ethnicityOA_Other Ethnic Group"];
+
+			asian = displayformat(((+e.properties["ethnicityOA_Asian / Asian British: Bangladeshi"] +
+					+e.properties["ethnicityOA_Asian / Asian British: Chinese"] +
+					+e.properties["ethnicityOA_Asian / Asian British: Indian"] +
+					+e.properties["ethnicityOA_Asian / Asian British: Other Asian"] +
+					+e.properties["ethnicityOA_Asian / Asian British: Pakistani"])/totalpop)*100);
+
+			white = displayformat((+e.properties["ethnicityOA_White"]/totalpop)*100);
+
+			black = displayformat((+e.properties["ethnicityOA_Black / African / Caribbean / Black British"]/totalpop)*100);
+			mixed = displayformat((+e.properties["ethnicityOA_Mixed / Multiple ethnic group"]/totalpop)*100);
+			other = displayformat((+e.properties["ethnicityOA_Other Ethnic Group"]/totalpop)*100);
+
+
+			percentages = [white,black,asian,mixed,other];
+
+			d3.selectAll(".percentlabel").remove();
+
+			legend.insert("label",".legendBlocks").attr('class','percentlabel').text(function(d,i) {
+				return percentages[i] + "%";
+			});
+
+			percentages.forEach(function(d,i) {
+				d3.select("#legendRect" + i).transition().duration(300).style("width", (percentages[i]/3.3333333) + "px");
+			});
+
+
+
+
+		}
 
 		function disableMouseEvents() {
 				map.off("mousemove", "OAbounds", onMove);
@@ -394,6 +432,20 @@ if(Modernizr.webgl) {
 		function selectArea(code) {
 			$("#areaselect").val(code).trigger("chosen:updated");
 		}
+
+
+		function tog(v){return v?'addClass':'removeClass';}
+		$(document).on('input', '.clearable', function(){
+				$(this)[tog(this.value)]('x');
+		}).on('mousemove', '.x', function( e ){
+				$(this)[tog(this.offsetWidth-28 < e.clientX-this.getBoundingClientRect().left)]('onX');
+		}).on('touchstart click', '.onX', function( ev ){
+				ev.preventDefault();
+				$(this).removeClass('x onX').val('').change();
+				console.log("here")
+				enableMouseEvents();
+				onLeave();
+		});
 
 		function zoomToArea(code) {
 
